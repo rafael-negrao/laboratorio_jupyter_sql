@@ -39,7 +39,7 @@ cd laboratorio_jupyter_sql
 2. **Inicie os containers**
 
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 3. **Acesse o Jupyter Notebook**
@@ -66,11 +66,11 @@ No notebook, execute:
 
 ```
 laboratorio_jupyter_sql/
-├── docker-compose.yml      # Configuração dos containers
+├── docker compose.yml      # Configuração dos containers
 ├── notebooks/              # Notebooks Jupyter
-├── data/                   # Dados persistentes MySQL
+├── data_mysql/             # Dados persistentes MySQL
 ├── data_postgres/          # Dados persistentes PostgreSQL
-└── README.md              # Este arquivo
+└── README.md               # Este arquivo
 ```
 
 
@@ -96,12 +96,12 @@ laboratorio_jupyter_sql/
 ## 🛑 Parar o Projeto
 
 ```shell script
-docker-compose down
+docker compose down
 ```
 
 Para remover também os volumes (dados):
 ```shell script
-docker-compose down -v
+docker compose down -v
 ```
 
 ## 🤝 Contribuindo
