@@ -1,0 +1,57 @@
+
+services:
+
+  db_lab_mysql:
+    image: library/mysql:8.0.31
+    container_name: db_lab_mysql
+    hostname: db_lab_mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=db_lab_mysql
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_USER=user_app
+      - MYSQL_PASSWORD=user_app
+    volumes:
+      - ./data_mysql:/var/lib/mysql
+    networks:
+      - jupyter_network
+
+  db_lab_postgres:
+    image: postgres:15
+    container_name: db_lab_postgres
+    hostname: db_lab_postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=db_lab_postgres
+      - POSTGRES_USER=user_app
+      - POSTGRES_PASSWORD=user_app
+    volumes:
+      - ./data_postgres:/var/lib/postgresql/data
+    networks:
+      - jupyter_network
+
+  jupyter:
+    image: jupyter/datascience-notebook:x86_64-ubuntu-22.04
+    container_name: jupyter_notebook
+    ports:
+      - "8888:8888"
+    environment:
+      JUPYTER_ENABLE_LAB: "yes"
+    volumes:
+      - ./notebooks/aula-sql:/home/jovyan/aula-sql
+    networks:
+      - jupyter_network
+    depends_on:
+      - db_lab_mysql
+
+    command: >
+      bash -c "pip install pymysql sqlalchemy jupysql ipywidgets psycopg2-binary &&
+               start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''"
+
+networks:
+  jupyter_network:
+    driver: bridge
+
