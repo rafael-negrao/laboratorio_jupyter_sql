@@ -1,22 +1,22 @@
 
 services:
 
-  db_lab_mysql:
-    image: library/mysql:8.0.31
-    container_name: db_lab_mysql
-    hostname: db_lab_mysql
-    ports:
-      - 3306:3306
-    environment:
-      - MYSQL_DATABASE=db_lab_mysql
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_ROOT_HOST=%
-      - MYSQL_USER=user_app
-      - MYSQL_PASSWORD=user_app
-    volumes:
-      - ./data_mysql:/var/lib/mysql
-    networks:
-      - jupyter_network
+#  db_lab_mysql:
+#    image: library/mysql:8.0.31
+#    container_name: db_lab_mysql
+#    hostname: db_lab_mysql
+#    ports:
+#      - 3306:3306
+#    environment:
+#      - MYSQL_DATABASE=db_lab_mysql
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_ROOT_HOST=%
+#      - MYSQL_USER=user_app
+#      - MYSQL_PASSWORD=user_app
+#    volumes:
+#      - ./data_mysql:/var/lib/mysql
+#    networks:
+#      - jupyter_network
 
   db_lab_postgres:
     image: postgres:15
@@ -34,21 +34,30 @@ services:
       - jupyter_network
 
   jupyter:
-    image: jupyter/datascience-notebook:x86_64-ubuntu-22.04
+    image: jupyter/scipy-notebook:x86_64-ubuntu-22.04
     container_name: jupyter_notebook
     ports:
       - "8888:8888"
     environment:
       JUPYTER_ENABLE_LAB: "yes"
+      PYDEVD_DISABLE_FILE_VALIDATION: "1"
+      PYTHONFROZENMODULES: "off"
     volumes:
       - ./notebooks/aula-sql:/home/jovyan/aula-sql
     networks:
       - jupyter_network
     depends_on:
-      - db_lab_mysql
-
+      - db_lab_postgres
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 4G
+    shm_size: '2gb'
     command: >
-      bash -c "pip install pymysql sqlalchemy jupysql ipywidgets psycopg2-binary &&
+      bash -c "rm -rf /home/jovyan/aula-sql/.ipynb_checkpoints &&
+               pip install pymysql sqlalchemy jupysql ipywidgets psycopg2-binary &&
+               jupyter trust /home/jovyan/aula-sql/*.ipynb &&
                start-notebook.sh --NotebookApp.token='' --NotebookApp.password=''"
 
 networks:
