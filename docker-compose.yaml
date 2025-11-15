@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres-sql-aula
+    environment:
+      POSTGRES_DB: curso_sql
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata_cursosql:/var/lib/postgresql/data
+    networks:
+      - rede_sql
+
+  jupyter:
+    build: ./jupyter
+    container_name: jupyter-sql-aula
+    environment:
+      # Variáveis úteis para usar dentro dos notebooks
+      POSTGRES_HOST: postgres
+      POSTGRES_DB: curso_sql
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebooks/work:/home/jovyan/work
+    depends_on:
+      - postgres
+    networks:
+      - rede_sql
+
+volumes:
+  pgdata_cursosql:
+
+networks:
+  rede_sql:
+    driver: bridge
