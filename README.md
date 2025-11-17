@@ -72,6 +72,7 @@ Abra seu navegador e acesse: `http://localhost:8888`
 ```
 laboratorio_jupyter_sql/
 ├── docker compose.yml      # Configuração dos containers
+├── jupyter/                # Dockerfile para criar imagem do Jupyter
 ├── notebooks/              # Notebooks Jupyter
 └── README.md               # Este arquivo
 ```
