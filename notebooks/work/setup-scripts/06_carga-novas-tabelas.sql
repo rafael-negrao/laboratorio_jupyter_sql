@@ -15,7 +15,7 @@ INSERT INTO transportadora (nome, email, telefone) VALUES
 ('Transportadora 14', 'contato14@transportadora.com', '+5511979745504'),
 ('Transportadora 15', 'contato15@transportadora.com', '+5511959855999');
 
-INSERT INTO forma_pagamento (tipoFormaPagamento) VALUES ('PIX'), ('CartaoCredito');
+INSERT INTO forma_pagamento (tipo_forma_pagamento) VALUES ('PIX'), ('CartaoCredito');
 
 UPDATE pedido SET forma_pagamento_id = CASE
 WHEN id = 1 THEN 2
