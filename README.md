@@ -48,19 +48,24 @@ Abra seu navegador e acesse: `http://localhost:8888`
 
 4. **Conecte-se ao banco de dados**
 
-No notebook, execute:
-
-**Para MySQL:**
-```jupyter
-%load_ext sql
-%sql mysql+pymysql://user_app:user_app@db_lab_mysql:3306/db_lab_mysql
-```
-**Para PostgreSQL:**
+4.1. Carregar o módulo `sql`
 
 ```jupyter
 %load_ext sql
-%sql postgresql://user_app:user_app@db_lab_postgres:5432/db_lab_postgres
 ```
+
+4.2. Conectar ao banco de dados PostgreSQL
+
+```jupyter
+%sql postgresql://admin:admin@postgres-sql-aula:5432/curso_sql
+```
+
+4.3. Fechar a conexãom com o banco de dados PostgreSQL
+
+```jupyter
+%sql --close postgresql://admin:***@postgres-sql-aula:5432/curso_sql
+```
+
 
 ## 📂 Estrutura do Projeto
 
@@ -68,8 +73,6 @@ No notebook, execute:
 laboratorio_jupyter_sql/
 ├── docker compose.yml      # Configuração dos containers
 ├── notebooks/              # Notebooks Jupyter
-├── data_mysql/             # Dados persistentes MySQL
-├── data_postgres/          # Dados persistentes PostgreSQL
 └── README.md               # Este arquivo
 ```
 
@@ -78,20 +81,12 @@ laboratorio_jupyter_sql/
 
 ### Credenciais do Banco de Dados
 
-**MySQL:**
-- Host: `db_lab_mysql`
-- Porta: `3306`
-- Database: `db_lab_mysql`
-- Usuário: `user_app`
-- Senha: `user_app`
-- Root Password: `root`
-
 **PostgreSQL:**
-- Host: `db_lab_postgres`
+- Host: `postgres-sql-aula`
 - Porta: `5432`
-- Database: `db_lab_postgres`
-- Usuário: `user_app`
-- Senha: `user_app`
+- Database: `curso_sql`
+- Usuário: `admin`
+- Senha: `admin`
 
 ## 🛑 Parar o Projeto
 
