@@ -38,6 +38,14 @@ cd laboratorio_jupyter_sql
 
 2. **Inicie os containers**
 
+Iniciar os containers compilando a imagem do Jupyter Notebook
+
+```bash
+docker compose up -d --build
+```
+
+Iniciar os containers após a compilação da imagem do Jupyter Notebook
+
 ```bash
 docker compose up -d
 ```
